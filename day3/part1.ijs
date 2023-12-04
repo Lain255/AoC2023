@@ -1,12 +1,8 @@
-file =. (];._2) (1!:1) < 'input.txt'
-scheme =. file
+scheme =. (];._2) (1!:1) < 'input.txt'
 digits =. '0123456789'
 
 numMask =. (scheme e. digits)
 symbolMask =. -. (scheme e. digits,'.')
-
-unmask =. 3 : 'y } (($scheme) $ '' '') ,: scheme'
-nums =. unmask numMask
 
 infect =. 3 : 0
     seed =. y
@@ -16,4 +12,5 @@ infect =. 3 : 0
     infectedMask =. numMask *. infectStep^:_ seed
 )
 
+unmask =. 3 : 'y } (($scheme) $ '' '') ,: scheme'
 +/ , ". unmask infect symbolMask
