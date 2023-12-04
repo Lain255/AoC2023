@@ -1,5 +1,6 @@
-file =. > ;: 1!:1 < 'input.txt'
-digits =. '0123456789'
-stripLetters =. (#~ e.&digits)
+file =. (<;._2) (1!:1) < 'input.txt'
+
+stripLetters =. (#~ e.&'0123456789')
 getCode =. ([: ". {. , {:) @: stripLetters
-+/ getCode"1 file
+
++/ getCode&> file
