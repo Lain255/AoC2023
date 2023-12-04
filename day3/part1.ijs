@@ -8,9 +8,12 @@ symbolMask =. -. (scheme e. digits,'.')
 unmask =. 3 : 'y } (($scheme) $ '' '') ,: scheme'
 nums =. unmask numMask
 
-border =. 4 : 'x , (x (,"1) y (,"1) x) , x'
-convolute =. 3 : '(1 1,: 3 3) (+./@:,;._3) 0 border y'
-infect =. 3 : 'y +. numMask *. convolute y'
-infectedMask =. numMask *. infect^:_ symbolMask
+infect =. 3 : 0
+    seed =. y
+    border =. ([ ,.~ [ ,. [ ,~ [ , ])
+    convolute =. ((1 1,: 3 3) (+./@:,;._3) 0&border)
+    infectStep =. (+. numMask *. convolute)
+    infectedMask =. numMask *. infectStep^:_ seed
+)
 
-+/ , ". unmask infectedMask
++/ , ". unmask infect symbolMask
