@@ -8,15 +8,11 @@ getNumberSafe =. 3 : '(0 ~: #stripLetters y) { 0 , ".stripLetters y'
 colorEnum =. ('red';'green';'blue')
 classifyColor =. 3 : 'colorEnum ([: +./ |:)@:(E.&>) <y'
 
-gamePossible =. 4 : 0
-    'game rest' =. ([: <;._1 ':'&,) y
-    gameNum =. ".stripLetters game
-    
-    rolls =. ([: <;._1 ';'&,) rest
+minColors =. 3 : 0
+    game =. {:([: <;._1 ':'&,) y
+    rolls =. ([: <;._1 ';'&,)&> game
     splitRolls =. ([: <;._1 ','&,)&> rolls
-    maxColors =. >./>./ (classifyColor * getNumberSafe)&> splitRolls
-    
-    result =. gameNum * *./ x >: maxColors
+    return =. >./>./ (classifyColor * getNumberSafe)&> splitRolls
 )
 
-+/ 12 13 14&gamePossible&> file
++/ (] * (1&+) & i. & #) *./ & (12 13 14 & >:) & minColors&> file
