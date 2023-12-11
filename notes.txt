@@ -1,0 +1,54 @@
+symbol  use             result                      name
+i.      i. x            0 1 2 ... x                 list
+@:      f @: g x        f (g x)                     composition of functions
+/       f / (x y z)     x f y f z                   reduce
+&       (f & x) y       x f k                       curry
+~       x f~ y          y f x                       swap
+~       f~ y            y f y                       copy
+]       x ] y           y                           right
+[       x [ y           x                           left
+$       3 3 $ x         3x3 array filled with x     rank
+#       # x             length of array x           length
+/       x f/ y                                      table
+\.      u\. x                                       suffixes
+
+trains
+(f g)   y       =  y        f (g y)       monadic hook 
+(f g h) y       =  (f y)    g (h y)       monadic fork
+([: f g) y      =           f (g y)       capped monadic fork
+
+x (f g)   y     =  x        f (g y)       dyadic  hook 
+x (f g h) y     =  (x f y)  g (x h y)     dyadic  fork
+
+operators
+@:       (f @: g) y  =  f (g y)
+@:     x (f @: g) y  =  f (x g y)
+
+&:       (f &: g) y  =  f (g y) 
+&:     x (f &: g) y  =  (g x) f (g y)
+
+@        (f @ g)  y  =  (f @: g) " G  y
+@      x (f @ g)  y  =  x (f @: g) " LR y
+
+&        (f & g)  y  =  (f @: g) " G  y
+&      x (f & g)  y  =  (g x) (f " (G,G)) (g y)
+
+where G is the monadic rank of g and LR is the vector of left and right ranks of g.
+
+useful functions
+*/ @: =         same strings
+*/e.&' '        all empty
+-. 2&| i. {. $  even mask
+
+
+
+Folds
+]F..- 1 2 3 4 5 6       NB. (6-(5-(4-(3-(2-1))))) = 3
+10 ]F..- 1 2 3 4 5 6    NB. (6-(5-(4-(3-(2-(1-10)))))) = 13
+
+
+]F.:- 1 2 3 4 5 6       NB. (1-(2-(3-(4-(5-6))))) = -3
+10 ]F.:- 1 2 3 4 5 6    NB. (1-(2-(3-(4-(5-(6-10))))))= 7
+
+
+https://code.jsoftware.com/wiki/Essays/Tacit_Expressions
